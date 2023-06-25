@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>PAGINA USUARIOS GIT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container-fluid pt-3">
+  <h1 class="text-info">Mi primera página Bootstrap</h1>
+  <p>Página para ver los repositorios de un username de github</p>
+
+  <div class="form-group">
+    <label for="usr">Introduce usuario:</label>
+    <input type="text" class="form-control" id="usr">
+  </div>
+
+  <button type="enter" class="btn btn-primary" id="boton">Submit</button>
+
+  <br/>
+  <br/>
+  <table class="table table-striped" id="tabla">
+    <thead>
+    <tr>
+      <th>Repository</th>
+      <th>Description</th>
+      <th>Followers</th>
+    </tr>
+    </thead>
+
+  </table>
+
+</div>
+
+
+<script>
+  $(document).ready(function() {
+    var longTabla = 0;
+    $("#boton").click(function() {
+      var user = document.getElementById("usr").value;
+      var url = "http://api.github.com/users/" + user + "/repos";
+      for(var j=0; longTabla>0 ;j++)
+      {
+        $("#tabla tr:last").remove();
+        longTabla --;
+      }
+      $.get(url, function(data){
+        for(var i=0; i<data.length; i++)
+        {
+          var fila = "<tr><td>"+ data[i].name + "</td><td>" + data[i].description + "</td><td>" + data[i].stargazers_count;
+          $("#tabla").append(fila);
+          longTabla ++;
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
